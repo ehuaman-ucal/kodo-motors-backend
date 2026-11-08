@@ -168,7 +168,7 @@ Comprobación rápida: `GET http://localhost:4000/api/salud`.
 |---|---|
 | `npm run dev` | API con reinicio automático |
 | `npm start` | API sin nodemon |
-| `npm test` | 49 pruebas automáticas, sin necesidad de base de datos |
+| `npm test` | 61 pruebas automáticas, sin necesidad de base de datos |
 | `npm run bd:levantar` / `bd:detener` | Levanta o detiene MySQL |
 | `npm run bd:reiniciar` | Borra la base y la vuelve a crear desde `database/` |
 
@@ -195,10 +195,17 @@ Base: `http://localhost:4000/api`. Todos los recursos siguen el mismo contrato.
 | Vehículos (solo lectura) | `GET /api/vehiculos` | — para saber qué `vehiculo_id` usar en una reserva |
 | Salud | `GET /api/salud` | — estado de la API y de la base |
 
-Formato de error, igual en toda la API:
+Formato de error único y seguro en toda la API (Semana 10):
 
 ```json
-{ "mensaje": "Datos inválidos", "errores": [{ "campo": "fecha", "mensaje": "La fecha es obligatoria" }] }
+{
+  "estado": 400,
+  "tipo": "VALIDACION",
+  "mensaje": "Datos inválidos",
+  "idTraza": "e112f708",
+  "ruta": "POST /api/reservas",
+  "errores": [{ "campo": "fecha", "mensaje": "La fecha es obligatoria" }]
+}
 ```
 
 En sedes, servicios, catálogo y reservas, los errores de formato llegan así, por campo. Las reglas
